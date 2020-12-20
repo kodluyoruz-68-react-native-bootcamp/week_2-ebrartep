@@ -1,5 +1,6 @@
-import React, {useState} from 'react';
-import {View,
+import React, { useState } from 'react';
+import {
+    View,
     Text,
     StyleSheet,
     SafeAreaView,
@@ -8,27 +9,28 @@ import {View,
     Image,
     Modal,
     TextInput,
-    ScrollView} from 'react-native';
+    ScrollView
+} from 'react-native';
 
-export const TodoList =() =>{
+export const TodoList = () => {
 
 
-   
 
-    const [data,setData] = useState([{id: 1 , title:'Task 1' , active: false}]);
+
+    const [data, setData] = useState([{ id: 1, title: 'Task 1', active: false }]);
     const [isModalVisible, setIsModalVisible] = useState(false);
-    const [title,setTitle] = useState('');
-    const [butonDisable,setDisable] = useState('');
+    const [title, setTitle] = useState('');
+    const [butonDisable, setDisable] = useState('');
 
-    
 
-    const renderItem = ({item,id})=>{
+
+    const renderItem = ({ item, id }) => {
         return (
             <View>
                 <TouchableOpacity style={styles.flatButon} value={butonDisable}
-                onLongPress={() => deleteItemById(item.id)}
-                 onPress={() => {onPressButtonarrived(item)}} disabled={item.id === disablearrived ? true : false}>
-                <Text style={styles.flatText}>{item.title}</Text></TouchableOpacity>
+                    onLongPress={() => deleteItemById(item.id)}
+                    onPress={() => { onPressButtonarrived(item) }} disabled={item.id === disablearrived ? true : false}>
+                    <Text style={styles.flatText}>{item.title}</Text></TouchableOpacity>
             </View>
 
         );
@@ -39,34 +41,27 @@ export const TodoList =() =>{
 
     };
     const disableText = id => {
-        let newArr=[...data];       
+        let newArr = [...data];
 
         setDisable(true);
     };
 
-        
-      const  onPressButtonarrived = id => {
-            setDisable({ disablearrived: item.id })
-            setDisable({ colorarrived: item.id })
-    
-          };
 
-              
-      const  disablearrived = id => {
+    const onPressButtonarrived = id => {
+        setDisable({ disablearrived: item.id })
+        setDisable({ colorarrived: item.id })
+
+    };
+
+
+    const disablearrived = id => {
         disabled;
 
-      };
+    };
 
 
 
-
-
-
-
-    
-   
-    
-    const openModal=() => {
+    const openModal = () => {
         setIsModalVisible(true);
 
     };
@@ -80,116 +75,117 @@ export const TodoList =() =>{
 
         }
 
-   else{  let newArr=[...data];       
+        else {
+            let newArr = [...data];
 
-            newArr.push({id:newArr.length+1,title: title,active:false});
-                setData(newArr);
-                 setTitle('');
+            newArr.push({ id: newArr.length + 1, title: title, active: false });
+            setData(newArr);
+            setTitle('');
 
 
-        }       
+        }
     };
 
-    return(
+    return (
 
         <View>
-        <ScrollView>
-        <View style={styles.container}>
-            <SafeAreaView  style={styles.contentContainer}> 
-            <Text style = {styles.title}>TodoList</Text>
-            <FlatList testID="list"            
-  data={data} renderItem={renderItem} />
-            <TouchableOpacity style={styles.addIconBtnWrapper} onPress={openModal}>
-                <Image  style={styles.addTextIcon}  
-                source={require('../assets/add.png')}></Image>
-
-            </TouchableOpacity>
-            
-            </SafeAreaView>
-            <Modal transparent={true}  visible={isModalVisible}>
-
-                <View style={styles.modalContentWrapper}>
-                    <TouchableOpacity style={styles.closeBtnWrapper} onPress={() => setIsModalVisible(false)}>
-                    <Image  style={styles.closeIcon}  
-                source={require('../assets/cancel.png')}></Image>
-
-
-                    </TouchableOpacity >
-                    <View style={styles.inputWrapper}>
-                        <TextInput testID="input"
-                         value={title}
-                        
-                style={styles.textInput} 
-                        onChangeText={(text) => setTitle(text)} clearButtonMode="always" 
-                        placeholder={'Lütfen istediğiniz metni giriniz..'}></TextInput>
-
-                        <TouchableOpacity style={styles.btnWrapper}
-                        onPress={saveText} testID="button" >
-                            <Text style={{textAlign:'center'}}>  Ekle</Text>
+            <ScrollView>
+                <View style={styles.container}>
+                    <SafeAreaView style={styles.contentContainer}>
+                        <Text style={styles.title}>TodoList</Text>
+                        <FlatList keyExtractor={(item) => item.id.toString()} testID="list"
+                            data={data} renderItem={renderItem} />
+                        <TouchableOpacity style={styles.addIconBtnWrapper} onPress={openModal}>
+                            <Image style={styles.addTextIcon}
+                                source={require('../assets/add.png')}></Image>
 
                         </TouchableOpacity>
-                    
-                    
-                    </View>
+
+                    </SafeAreaView>
+                    <Modal transparent={true} visible={isModalVisible}>
+
+                        <View style={styles.modalContentWrapper}>
+                            <TouchableOpacity style={styles.closeBtnWrapper} onPress={() => setIsModalVisible(false)}>
+                                <Image style={styles.closeIcon}
+                                    source={require('../assets/cancel.png')}></Image>
+
+
+                            </TouchableOpacity >
+                            <View style={styles.inputWrapper}>
+                                <TextInput testID="input"
+                                    value={title}
+
+                                    style={styles.textInput}
+                                    onChangeText={(text) => setTitle(text)} clearButtonMode="always"
+                                    placeholder={'Lütfen istediğiniz metni giriniz..'}></TextInput>
+
+                                <TouchableOpacity style={styles.btnWrapper}
+                                    onPress={saveText} testID="button" >
+                                    <Text style={{ textAlign: 'center' }}>  Ekle</Text>
+
+                                </TouchableOpacity>
+
+
+                            </View>
+
+                        </View>
+
+                    </Modal>
 
                 </View>
-
-            </Modal>
-            
-        </View>
-        </ScrollView>
+            </ScrollView>
         </View>
     );
 };
 
 
-const styles=StyleSheet.create({
-    container:{
-        display:'flex',
-        flex:1,
+const styles = StyleSheet.create({
+    container: {
+        display: 'flex',
+        flex: 1,
     },
-    title:{
-        fontSize:18,
-        fontWeight:'bold',
-        textAlign:'center',
+    title: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        textAlign: 'center',
 
     },
-    contentContainer:{
-        display:'flex',
-        flex:1,
+    contentContainer: {
+        display: 'flex',
+        flex: 1,
     },
-    addTextIcon:{
+    addTextIcon: {
         width: 50,
         height: 50,
 
 
     },
-    addIconBtnWrapper:{
-        alignItems:'center',
-        marginBottom:20,
-        marginTop:20,
+    addIconBtnWrapper: {
+        alignItems: 'center',
+        marginBottom: 20,
+        marginTop: 20,
     },
-    
-    modalContentWrapper:{
+
+    modalContentWrapper: {
         height: '50%',
         marginTop: 'auto',
         backgroundColor: '#4DCFE0',
         padding: 15,
 
     },
-    closeIcon:{
+    closeIcon: {
         width: 30,
         height: 30,
 
     },
-    closeBtnWrapper:{
-        alignItems:'flex-end',
+    closeBtnWrapper: {
+        alignItems: 'flex-end',
 
     },
-    inputWrapper:{
+    inputWrapper: {
         marginTop: 50,
     },
-    textInput:{
+    textInput: {
         padding: 15,
         backgroundColor: 'white',
         borderRadius: 50,
@@ -197,26 +193,26 @@ const styles=StyleSheet.create({
 
 
     },
-    btnWrapper:{
+    btnWrapper: {
 
         backgroundColor: 'white',
         marginTop: 30,
-        borderRadius:40,
+        borderRadius: 40,
         padding: 15,
 
     },
-    flatButon:{
-        marginLeft:10,
-        marginRight:10,
+    flatButon: {
+        marginLeft: 10,
+        marginRight: 10,
         marginTop: 10,
-        borderRadius:40,
+        borderRadius: 40,
         padding: 15,
-        backgroundColor:'#4DCFE0',
+        backgroundColor: '#4DCFE0',
     },
-    flatText:{
+    flatText: {
         color: 'black',
-        fontWeight:'bold',
+        fontWeight: 'bold',
     }
 
 });
- 
+
