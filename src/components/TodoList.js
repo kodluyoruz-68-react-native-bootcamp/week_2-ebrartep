@@ -7,6 +7,7 @@ import {
     FlatList,
     TouchableOpacity,
     Image,
+    Alert,
     Modal,
     TextInput,
     ScrollView
@@ -17,19 +18,20 @@ export const TodoList = () => {
 
 
 
-    const [data, setData] = useState([{ id: 1, title: 'Task 1', active: false }]);
+    const [data, setData] = useState([]);
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [title, setTitle] = useState('');
-    const [butonDisable, setDisable] = useState('');
 
 
 
     const renderItem = ({ item, id }) => {
         return (
             <View>
-                <TouchableOpacity style={styles.flatButon} value={butonDisable}
+                <TouchableOpacity style={[
+                    styles.flatButon,
+                    item.isDone ? { opacity: 0.5 } : { opacity: 1 }]}
                     onLongPress={() => deleteItemById(item.id)}
-                    onPress={() => { onPressButtonarrived(item) }} disabled={item.id === disablearrived ? true : false}>
+                    onPress={() => disableId(item.id)} >
                     <Text style={styles.flatText}>{item.title}</Text></TouchableOpacity>
             </View>
 
@@ -40,24 +42,19 @@ export const TodoList = () => {
         setData(filteredData);
 
     };
-    const disableText = id => {
-        let newArr = [...data];
+    const disableId = id => {
+        const index = data.findIndex(item => item.id === id);
 
-        setDisable(true);
-    };
+        const newArray = [...data];
+        // alert('idsi{0}' +index);
 
-
-    const onPressButtonarrived = id => {
-        setDisable({ disablearrived: item.id })
-        setDisable({ colorarrived: item.id })
+        newArray[index].isDone = !newArray[index].isDone;
+        setData(newArray);
 
     };
 
 
-    const disablearrived = id => {
-        disabled;
 
-    };
 
 
 
@@ -68,22 +65,25 @@ export const TodoList = () => {
 
     const saveText = () => {
 
-
-        if (!title.trim()) {
-            alert('Lütfen listeye eklemek istediğiniz maddeleri giriniz.');
-            return;
-
-        }
-
-        else {
+        if (title.length > 0) {
             let newArr = [...data];
+            id = 0;
 
-            newArr.push({ id: newArr.length + 1, title: title, active: false });
+            newArr.push({ id: newArr.length + 1, title: title, isDone: false });
             setData(newArr);
             setTitle('');
+        }
+        /*  if (!title.trim()) {
+              alert('Lütfen listeye eklemek istediğiniz maddeleri giriniz.');
+              return;
+  
+          }*/
 
+        else {
+            // alert('Lütfen listeye eklemek istediğiniz maddeleri giriniz.');
 
         }
+
     };
 
     return (
@@ -116,12 +116,17 @@ export const TodoList = () => {
                                     value={title}
 
                                     style={styles.textInput}
-                                    onChangeText={(text) => setTitle(text)} clearButtonMode="always"
+                                    onChangeText={(text) => setTitle(text)}
                                     placeholder={'Lütfen istediğiniz metni giriniz..'}></TextInput>
 
                                 <TouchableOpacity style={styles.btnWrapper}
-                                    onPress={saveText} testID="button" >
-                                    <Text style={{ textAlign: 'center' }}>  Ekle</Text>
+                                    onPress={saveText} testID="button"
+
+                                >
+                                    <Text style={{ textAlign: 'center' }}
+
+
+                                    >  Ekle</Text>
 
                                 </TouchableOpacity>
 
@@ -131,7 +136,6 @@ export const TodoList = () => {
                         </View>
 
                     </Modal>
-
                 </View>
             </ScrollView>
         </View>
